@@ -1,0 +1,27 @@
+# Rust
+/target/
+**/*.rs.bk
+# Cargo.lock is intentionally tracked for binary/workspace reproducibility.
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+
+# Build artifacts
+*.so
+*.dylib
+*.dll
+
+# Test artifacts
+/tmp/

@@ -1,0 +1,61 @@
+{
+    "hooks": {
+        "SessionStart": [
+            {
+                "type": "command",
+                "command": "$HOME/.treerag/hooks/session_start.sh"
+            }
+        ],
+        "UserPromptSubmit": [
+            {
+                "type": "command",
+                "command": "$HOME/.treerag/hooks/user_prompt.sh"
+            }
+        ],
+        "PreToolUse": [
+            {
+                "type": "command",
+                "command": "$HOME/.treerag/hooks/pre_tool_use.sh"
+            }
+        ],
+        "PostToolUse": [
+            {
+                "type": "command",
+                "command": "$HOME/.treerag/hooks/post_tool_use.sh",
+                "matcher": [
+                    "Write",
+                    "Edit",
+                    "Create",
+                    "Delete",
+                    "write_to_file",
+                    "replace_file_content",
+                    "multi_replace_file_content"
+                ]
+            }
+        ],
+        "SubagentStart": [
+            {
+                "type": "command",
+                "command": "$HOME/.treerag/hooks/subagent_start.sh"
+            }
+        ],
+        "SubagentStop": [
+            {
+                "type": "command",
+                "command": "$HOME/.treerag/hooks/subagent_stop.sh"
+            }
+        ],
+        "PreCompact": [
+            {
+                "type": "command",
+                "command": "$HOME/.treerag/hooks/pre_compact.sh"
+            }
+        ],
+        "SessionEnd": [
+            {
+                "type": "command",
+                "command": "$HOME/.treerag/hooks/session_end.sh"
+            }
+        ]
+    }
+}

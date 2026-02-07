@@ -1,0 +1,20 @@
+[package]
+name = "treerag-cli"
+description = "TreeRAG command-line interface"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "treerag"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { workspace = true }
+clap = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+dirs = { workspace = true }
+
+treerag-ipc = { workspace = true }

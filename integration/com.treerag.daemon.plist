@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.treerag.daemon</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/treerag-daemon</string>
+    </array>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    
+    <key>StandardOutPath</key>
+    <string>/tmp/treerag.out.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/tmp/treerag.err.log</string>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>RUST_LOG</key>
+        <string>info</string>
+    </dict>
+    
+    <key>ProcessType</key>
+    <string>Background</string>
+    
+    <key>LowPriorityIO</key>
+    <true/>
+    
+    <key>HardResourceLimits</key>
+    <dict>
+        <key>MemoryLimit</key>
+        <integer>104857600</integer>
+    </dict>
+    
+    <key>SoftResourceLimits</key>
+    <dict>
+        <key>MemoryLimit</key>
+        <integer>83886080</integer>
+    </dict>
+</dict>
+</plist>
