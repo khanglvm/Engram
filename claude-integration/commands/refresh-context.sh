@@ -1,27 +1,27 @@
 #!/bin/bash
-# TreeRAG Slash Command: /refresh-context
+# Engram Slash Command: /refresh-context
 # Force refresh context for current session
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../hooks/common.sh"
 
-treerag_ensure_cache
+engram_ensure_cache
 
 # Clear cached context
-PROJECT_HASH=$(treerag_project_hash)
-CACHE_FILE="$TREERAG_CACHE_DIR/${PROJECT_HASH}.ctx"
+PROJECT_HASH=$(engram_project_hash)
+CACHE_FILE="$ENGRAM_CACHE_DIR/${PROJECT_HASH}.ctx"
 rm -f "$CACHE_FILE" 2>/dev/null
 
-echo "🔄 Refreshing TreeRAG context..."
+echo "🔄 Refreshing Engram context..."
 
-if ! treerag_is_running; then
-    echo "⚠️ Daemon not running. Start with: cargo run --bin treerag-daemon"
+if ! engram_is_running; then
+    echo "⚠️ Daemon not running. Start with: cargo run --bin engram-daemon"
     exit 1
 fi
 
 # Request fresh context
-RESULT=$(treerag_send '{"action":"get_context","cwd":"'"$PWD"'","prompt":null}' 5)
+RESULT=$(engram_send '{"action":"get_context","cwd":"'"$PWD"'","prompt":null}' 5)
 
 if [[ -n "$RESULT" ]]; then
     CONTEXT=$(echo "$RESULT" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("data",{}).get("context",""))' 2>/dev/null || echo "")

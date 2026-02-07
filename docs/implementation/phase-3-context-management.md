@@ -529,16 +529,16 @@ queries:
 
 ```bash
 # Context manager tests
-cargo test -p treerag-core context_manager::
+cargo test -p engram-core context_manager::
 
 # Router tests
-cargo test -p treerag-core router::
+cargo test -p engram-core router::
 
 # Vector index tests
-cargo test -p treerag-core vector_index::
+cargo test -p engram-core vector_index::
 
 # Rendering tests
-cargo test -p treerag-core rendering::
+cargo test -p engram-core rendering::
 
 # Integration tests
 cargo test --test integration_context
@@ -546,8 +546,8 @@ cargo test --test integration_retrieval
 cargo test --test e2e_context
 
 # Benchmarks
-cargo bench -p treerag-core -- context
-cargo bench -p treerag-core -- retrieval
+cargo bench -p engram-core -- context
+cargo bench -p engram-core -- retrieval
 ```
 
 ---
@@ -555,7 +555,7 @@ cargo bench -p treerag-core -- retrieval
 ## Deliverables Checklist
 
 ### Implementation
-- [x] ContextManager with scope creation (`treerag-context` crate)
+- [x] ContextManager with scope creation (`engram-context` crate)
 - [x] Hybrid router with query classification (tree-based only for now)
 - [ ] Local vector index (usearch + fastembed) — **Deferred to Phase 4**
 - [x] Context Sandwich builder (anchor/focus/horizon layers)

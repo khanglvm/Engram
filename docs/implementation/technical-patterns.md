@@ -18,7 +18,7 @@
 │  Hook Call (T=0ms)                                               │
 │       │                                                          │
 │       ├── Read from cache file (synchronous, <1ms)               │
-│       │       └── /tmp/treerag_cache/<hash>.ctx                  │
+│       │       └── /tmp/engram_cache/<hash>.ctx                  │
 │       │                                                          │
 │       ├── Return cached context immediately (T=1ms)              │
 │       │                                                          │
@@ -335,13 +335,13 @@ Check daemon running?
                │       OR auto-init if config allows
                │
                └─ Yes → Load context (async)
-                        └─ Show: "✓ TreeRAG active"
+                        └─ Show: "✓ Engram active"
 ```
 
 ### User Configuration
 
 ```yaml
-# ~/.treerag/config.yaml
+# ~/.engram/config.yaml
 auto_init:
   enabled: false          # Set to true for automatic init
   min_files: 10           # Don't auto-init tiny repos
@@ -351,7 +351,7 @@ auto_init:
     - "**/.git/**"
 
 # Per-project override
-# .treerag/config.yaml in project root
+# .engram/config.yaml in project root
 auto_init:
   enabled: true
 ```

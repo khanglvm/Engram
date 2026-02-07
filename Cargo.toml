@@ -1,20 +1,20 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/treerag-daemon",
-    "crates/treerag-core",
-    "crates/treerag-ipc",
-    "crates/treerag-cli",
-    "crates/treerag-indexer",
-    "crates/treerag-context",
+    "crates/engram-daemon",
+    "crates/engram-core",
+    "crates/engram-ipc",
+    "crates/engram-cli",
+    "crates/engram-indexer",
+    "crates/engram-context",
 ]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/user/treerag"
-authors = ["TreeRAG Team"]
+repository = "https://github.com/khanglvm/Engram"
+authors = ["Engram Team"]
 
 [workspace.dependencies]
 # Async runtime
@@ -58,14 +58,13 @@ sha2 = "0.10"
 parking_lot = "0.12"
 
 # Internal crates
-treerag-core = { path = "crates/treerag-core" }
-treerag-ipc = { path = "crates/treerag-ipc" }
-treerag-indexer = { path = "crates/treerag-indexer" }
-treerag-context = { path = "crates/treerag-context" }
+engram-core = { path = "crates/engram-core" }
+engram-ipc = { path = "crates/engram-ipc" }
+engram-indexer = { path = "crates/engram-indexer" }
+engram-context = { path = "crates/engram-context" }
 
 [profile.release]
 lto = true
 codegen-units = 1
 panic = "abort"
 strip = true
-

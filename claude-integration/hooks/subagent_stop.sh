@@ -1,5 +1,5 @@
 #!/bin/bash
-# TreeRAG Hook: SubagentStop
+# Engram Hook: SubagentStop
 # Fires when a subagent completes
 # Input: JSON with agent_id, outcome, files_touched
 
@@ -21,6 +21,6 @@ EXPERIENCE='{
 }'
 
 # Fire-and-forget: graft experience
-treerag_send_async '{"action":"graft_experience","cwd":"'"$PWD"'","experience":'"$EXPERIENCE"'}'
+engram_send_async '{"action":"graft_experience","cwd":"'"$PWD"'","experience":'"$EXPERIENCE"'}'
 
 exit 0

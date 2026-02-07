@@ -74,7 +74,7 @@
 
 ### Storage Layout
 ```
-~/.treerag/projects/<hash>/
+~/.engram/projects/<hash>/
 ├── manifest.json       # Project metadata
 ├── skeleton.json       # Fast-load structure (no content)
 ├── enriched.json       # Full AI-enriched data
@@ -338,13 +338,13 @@ Maintain test fixtures for:
 
 ```bash
 # Scanner tests
-cargo test -p treerag-indexer scanner::
+cargo test -p engram-indexer scanner::
 
 # Storage tests
-cargo test -p treerag-core storage::
+cargo test -p engram-core storage::
 
 # Watcher tests
-cargo test -p treerag-indexer watcher::
+cargo test -p engram-indexer watcher::
 
 # Integration tests
 cargo test --test integration_scanner
@@ -352,8 +352,8 @@ cargo test --test integration_storage
 cargo test --test integration_watcher
 
 # Benchmarks
-cargo bench -p treerag-indexer -- scanner
-cargo bench -p treerag-core -- storage
+cargo bench -p engram-indexer -- scanner
+cargo bench -p engram-core -- storage
 
 # Large dataset tests (CI only)
 cargo test --release -- --ignored large_dataset

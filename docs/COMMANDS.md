@@ -1,31 +1,31 @@
-# TreeRAG CLI Commands
+# Engram CLI Commands
 
 ## Daemon Control
 
-### `treerag start`
-Start the TreeRAG daemon in the background.
+### `engram start`
+Start the Engram daemon in the background.
 
 ```bash
-treerag start
+engram start
 ```
 
-### `treerag stop`
+### `engram stop`
 Stop the running daemon.
 
 ```bash
-treerag stop
+engram stop
 ```
 
-### `treerag status`
+### `engram status`
 Show daemon status and metrics.
 
 ```bash
-treerag status
+engram status
 ```
 
 Output:
 ```
-TreeRAG Daemon Status
+Engram Daemon Status
   Version: 0.1.0
   Uptime: 3600s
   Projects loaded: 2
@@ -34,11 +34,11 @@ TreeRAG Daemon Status
   Cache hit rate: 92%
 ```
 
-### `treerag ping`
+### `engram ping`
 Check daemon responsiveness.
 
 ```bash
-treerag ping
+engram ping
 ```
 
 Output:
@@ -48,22 +48,22 @@ Pong! (2ms)
 
 ## Project Management
 
-### `treerag init <path>`
+### `engram init <path>`
 Initialize a project for indexing.
 
 ```bash
-treerag init .
-treerag init /path/to/project
+engram init .
+engram init /path/to/project
 ```
 
 Options:
 - `--quick`: Skip AI enrichment (faster)
 
-### `treerag project <path>`
+### `engram project <path>`
 Show project information.
 
 ```bash
-treerag project .
+engram project .
 ```
 
 Output:
@@ -79,6 +79,6 @@ Project: my-project
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `TREERAG_SOCKET` | `/tmp/treerag.sock` | Unix socket path |
-| `TREERAG_DATA_DIR` | `~/.treerag` | Data directory |
-| `TREERAG_LOG_LEVEL` | `info` | Log level (trace/debug/info/warn/error) |
+| `ENGRAM_SOCKET` | `/tmp/engram.sock` | Unix socket path |
+| `ENGRAM_DATA_DIR` | `~/.engram` | Data directory |
+| `ENGRAM_LOG_LEVEL` | `info` | Log level (trace/debug/info/warn/error) |

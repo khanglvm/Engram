@@ -1,5 +1,5 @@
 #!/bin/bash
-# TreeRAG Hook: UserPromptSubmit
+# Engram Hook: UserPromptSubmit
 # Fires before Claude processes user prompt
 # Input: JSON with prompt field on stdin
 
@@ -7,14 +7,14 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
-treerag_ensure_cache
+engram_ensure_cache
 
 # Read prompt from stdin
 INPUT=$(cat)
 PROMPT=$(echo "$INPUT" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("prompt",""))' 2>/dev/null || echo "")
 
-PROJECT_HASH=$(treerag_project_hash)
-CACHE_FILE="$TREERAG_CACHE_DIR/${PROJECT_HASH}.ctx"
+PROJECT_HASH=$(engram_project_hash)
+CACHE_FILE="$ENGRAM_CACHE_DIR/${PROJECT_HASH}.ctx"
 
 # 1. Return cached context immediately (if available)
 if [[ -f "$CACHE_FILE" ]]; then
@@ -25,9 +25,9 @@ if [[ -f "$CACHE_FILE" ]]; then
 fi
 
 # 2. Fire-and-forget: prepare context for next prompt
-if [[ -n "$PROMPT" ]] && treerag_is_running; then
+if [[ -n "$PROMPT" ]] && engram_is_running; then
     ESCAPED_PROMPT=$(json_escape "$PROMPT")
-    treerag_send_async '{"action":"prepare_context","cwd":"'"$PWD"'","prompt":'"$ESCAPED_PROMPT"'}'
+    engram_send_async '{"action":"prepare_context","cwd":"'"$PWD"'","prompt":'"$ESCAPED_PROMPT"'}'
 fi
 
 exit 0

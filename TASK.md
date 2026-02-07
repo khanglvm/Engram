@@ -1,7 +1,7 @@
-# TreeRAG Project Task Tracker
+# Engram Project Task Tracker
 
 ## Overview
-Research and implementation of TreeRAG - a daemon-based context management system for AI coding agents.
+Research and implementation of Engram - a daemon-based context management system for AI coding agents.
 
 ---
 
@@ -35,7 +35,7 @@ See detailed plans in `/docs/implementation/`:
 - [x] Daemon lifecycle management (daemon.rs)
 - [x] Unix socket IPC (server.rs, client.rs, protocol.rs)
 - [x] CLI skeleton (start/stop/status/init/project/ping)
-- [x] launchd integration (com.treerag.daemon.plist)
+- [x] launchd integration (com.engram.daemon.plist)
 - [x] Project manager with LRU cache
 - [x] Configuration loading (YAML support)
 

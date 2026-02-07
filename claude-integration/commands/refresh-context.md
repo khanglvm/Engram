@@ -1,4 +1,4 @@
-Force refresh TreeRAG context for the current session.
+Force refresh Engram context for the current session.
 
 This clears cached context and requests a fresh context
 build from the daemon.

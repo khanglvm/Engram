@@ -1,15 +1,15 @@
 #!/bin/bash
-# TreeRAG Claude Code Integration Installer
-# Installs hooks and commands to ~/.treerag
+# Engram Claude Code Integration Installer
+# Installs hooks and commands to ~/.engram
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-INSTALL_DIR="$HOME/.treerag"
+INSTALL_DIR="$HOME/.engram"
 CLAUDE_DIR="$HOME/.claude"
 
 echo "╔═══════════════════════════════════════════╗"
-echo "║   TreeRAG Claude Code Integration Setup   ║"
+echo "║   Engram Claude Code Integration Setup   ║"
 echo "╚═══════════════════════════════════════════╝"
 echo ""
 
@@ -67,11 +67,11 @@ echo "🚀 Setting up daemon auto-start..."
 LAUNCH_AGENTS="$HOME/Library/LaunchAgents"
 mkdir -p "$LAUNCH_AGENTS"
 
-if [[ -f "$SCRIPT_DIR/../integration/com.treerag.daemon.plist" ]]; then
-    cp "$SCRIPT_DIR/../integration/com.treerag.daemon.plist" "$LAUNCH_AGENTS/"
+if [[ -f "$SCRIPT_DIR/../integration/com.engram.daemon.plist" ]]; then
+    cp "$SCRIPT_DIR/../integration/com.engram.daemon.plist" "$LAUNCH_AGENTS/"
     echo "   Installed launchd plist"
-elif [[ -f "$SCRIPT_DIR/com.treerag.daemon.plist" ]]; then
-    cp "$SCRIPT_DIR/com.treerag.daemon.plist" "$LAUNCH_AGENTS/"
+elif [[ -f "$SCRIPT_DIR/com.engram.daemon.plist" ]]; then
+    cp "$SCRIPT_DIR/com.engram.daemon.plist" "$LAUNCH_AGENTS/"
     echo "   Installed launchd plist"
 else
     echo "   ⚠️  No launchd plist found - manual daemon start required"
@@ -88,7 +88,7 @@ echo "  1. Build the daemon:"
 echo "     cd $(dirname "$SCRIPT_DIR") && cargo build --release"
 echo ""
 echo "  2. Start the daemon:"
-echo "     cargo run --bin treerag-daemon"
+echo "     cargo run --bin engram-daemon"
 echo ""
 echo "  3. In Claude Code, use /init-project to index your project"
 echo ""

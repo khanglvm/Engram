@@ -1,4 +1,4 @@
-Show TreeRAG indexing status for the current project.
+Show Engram indexing status for the current project.
 
 Displays:
 - Daemon running status

@@ -1,5 +1,5 @@
 #!/bin/bash
-# TreeRAG Hook: PreToolUse
+# Engram Hook: PreToolUse
 # Fires before Claude uses a tool
 # Input: JSON with tool_name and tool_input
 

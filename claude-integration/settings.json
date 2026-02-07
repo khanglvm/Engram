@@ -3,25 +3,25 @@
         "SessionStart": [
             {
                 "type": "command",
-                "command": "$HOME/.treerag/hooks/session_start.sh"
+                "command": "$HOME/.engram/hooks/session_start.sh"
             }
         ],
         "UserPromptSubmit": [
             {
                 "type": "command",
-                "command": "$HOME/.treerag/hooks/user_prompt.sh"
+                "command": "$HOME/.engram/hooks/user_prompt.sh"
             }
         ],
         "PreToolUse": [
             {
                 "type": "command",
-                "command": "$HOME/.treerag/hooks/pre_tool_use.sh"
+                "command": "$HOME/.engram/hooks/pre_tool_use.sh"
             }
         ],
         "PostToolUse": [
             {
                 "type": "command",
-                "command": "$HOME/.treerag/hooks/post_tool_use.sh",
+                "command": "$HOME/.engram/hooks/post_tool_use.sh",
                 "matcher": [
                     "Write",
                     "Edit",
@@ -36,25 +36,25 @@
         "SubagentStart": [
             {
                 "type": "command",
-                "command": "$HOME/.treerag/hooks/subagent_start.sh"
+                "command": "$HOME/.engram/hooks/subagent_start.sh"
             }
         ],
         "SubagentStop": [
             {
                 "type": "command",
-                "command": "$HOME/.treerag/hooks/subagent_stop.sh"
+                "command": "$HOME/.engram/hooks/subagent_stop.sh"
             }
         ],
         "PreCompact": [
             {
                 "type": "command",
-                "command": "$HOME/.treerag/hooks/pre_compact.sh"
+                "command": "$HOME/.engram/hooks/pre_compact.sh"
             }
         ],
         "SessionEnd": [
             {
                 "type": "command",
-                "command": "$HOME/.treerag/hooks/session_end.sh"
+                "command": "$HOME/.engram/hooks/session_end.sh"
             }
         ]
     }

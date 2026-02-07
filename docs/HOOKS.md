@@ -1,8 +1,8 @@
-# TreeRAG Claude Code Hooks
+# Engram Claude Code Hooks
 
 ## Overview
 
-TreeRAG integrates with Claude Code via hooks that inject context and track agent decisions.
+Engram integrates with Claude Code via hooks that inject context and track agent decisions.
 
 ## Hook Events
 
@@ -36,7 +36,7 @@ All hooks follow a non-blocking pattern:
 
 ### /init-project
 
-Initialize current project for TreeRAG indexing.
+Initialize current project for Engram indexing.
 
 ```
 Usage: /init-project [--quick]
@@ -68,7 +68,7 @@ Usage: /refresh-context
 ```
 
 This installs:
-- Hook scripts to `~/.treerag/hooks/`
+- Hook scripts to `~/.engram/hooks/`
 - Command files to `~/.claude/commands/`
 - Settings to `~/.claude/settings.json`
 
@@ -81,7 +81,7 @@ Hooks are configured in `~/.claude/settings.json`:
   "hooks": {
     "SessionStart": [{
       "type": "command",
-      "command": "$HOME/.treerag/hooks/session_start.sh"
+      "command": "$HOME/.engram/hooks/session_start.sh"
     }],
     ...
   }

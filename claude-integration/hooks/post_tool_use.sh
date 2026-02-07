@@ -1,5 +1,5 @@
 #!/bin/bash
-# TreeRAG Hook: PostToolUse
+# Engram Hook: PostToolUse
 # Fires after Claude modifies a file
 # Input: JSON with tool_name and tool_input
 
@@ -23,7 +23,7 @@ case "$TOOL" in
             
             # Fire-and-forget: notify file change
             ESCAPED_FILE=$(json_escape "$FILE")
-            treerag_send_async '{"action":"notify_file_change","cwd":"'"$PWD"'","path":'"$ESCAPED_FILE"',"change_type":"'"$CHANGE_TYPE"'"}'
+            engram_send_async '{"action":"notify_file_change","cwd":"'"$PWD"'","path":'"$ESCAPED_FILE"',"change_type":"'"$CHANGE_TYPE"'"}'
         fi
         ;;
 esac

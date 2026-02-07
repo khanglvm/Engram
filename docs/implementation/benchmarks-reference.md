@@ -2,7 +2,7 @@
 
 > **Purpose**: Document realistic performance targets based on actual benchmarks and industry data.
 
-This document provides evidence-based performance targets for TreeRAG components. All numbers are derived from published benchmarks, library documentation, or real-world measurements.
+This document provides evidence-based performance targets for Engram components. All numbers are derived from published benchmarks, library documentation, or real-world measurements.
 
 ---
 
@@ -13,7 +13,7 @@ This document provides evidence-based performance targets for TreeRAG components
 - Tokio networking adds ~8µs overhead for localhost TCP [zenoh.io]
 - Unix domain sockets bypass network stack, performing better than TCP for local IPC
 
-### Realistic Targets for TreeRAG
+### Realistic Targets for Engram
 
 | Metric | Target | Rationale |
 |--------|--------|-----------|
@@ -38,7 +38,7 @@ This document provides evidence-based performance targets for TreeRAG components
 - `walkdir`: Performance comparable to system `find` [github.com/BurntSushi/walkdir]
 - File system I/O is the bottleneck; actual speeds depend on disk and cache state
 
-### Realistic Targets for TreeRAG
+### Realistic Targets for Engram
 
 | Metric | Target | Rationale |
 |--------|--------|-----------|
@@ -63,7 +63,7 @@ This document provides evidence-based performance targets for TreeRAG components
 - Full file parse: Varies by language and file size
 - Incremental parsing: Sub-millisecond for small edits
 
-### Realistic Targets for TreeRAG
+### Realistic Targets for Engram
 
 | Metric | Target | Rationale |
 |--------|--------|-----------|
@@ -89,7 +89,7 @@ This document provides evidence-based performance targets for TreeRAG components
 - With 8-bit quantization: Up to 274k QPS [github.com]
 - FAISS IndexFlatL2: 55.3ms (USearch is 20x faster for brute-force)
 
-### Realistic Targets for TreeRAG
+### Realistic Targets for Engram
 
 | Metric | Target | Rationale |
 |--------|--------|-----------|
@@ -117,7 +117,7 @@ This document provides evidence-based performance targets for TreeRAG components
 - Quantized models: Up to 4x speedup vs bf16 baseline [huggingface.co]
 - Dimension: 384 for bge-small-en-v1.5
 
-### Realistic Targets for TreeRAG
+### Realistic Targets for Engram
 
 | Metric | Target | Rationale |
 |--------|--------|-----------|
@@ -143,7 +143,7 @@ This document provides evidence-based performance targets for TreeRAG components
 - Static linking increases binary size but not runtime RSS
 - Each loaded library adds to footprint
 
-### Realistic Targets for TreeRAG
+### Realistic Targets for Engram
 
 | Component | Target | Rationale |
 |-----------|--------|-----------|

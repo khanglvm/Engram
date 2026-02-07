@@ -1,6 +1,6 @@
 # Phase 4: Claude Code Integration
 
-> **Goal**: Integrate TreeRAG with Claude Code via hooks and custom commands for seamless AI-assisted development.
+> **Goal**: Integrate Engram with Claude Code via hooks and custom commands for seamless AI-assisted development.
 
 ## Overview
 
@@ -36,8 +36,8 @@ All hooks follow this pattern to avoid blocking Claude Code:
 #!/bin/bash
 # Pattern: Fire-and-forget with cached response
 
-SOCKET="/tmp/treerag.sock"
-CACHE_DIR="/tmp/treerag_cache"
+SOCKET="/tmp/engram.sock"
+CACHE_DIR="/tmp/engram_cache"
 
 # 1. Return cached context immediately (if available)
 CACHE_FILE="$CACHE_DIR/$(echo -n "$PWD" | md5).ctx"
@@ -61,11 +61,11 @@ exit 0
 #!/bin/bash
 # Fires when Claude Code session begins
 
-SOCKET="/tmp/treerag.sock"
+SOCKET="/tmp/engram.sock"
 
 # Check if daemon is running
 if ! nc -z -U "$SOCKET" 2>/dev/null; then
-    echo "⚠️ TreeRAG daemon not running. Start with: treerag start"
+    echo "⚠️ Engram daemon not running. Start with: engram start"
     exit 0
 fi
 
@@ -73,7 +73,7 @@ fi
 RESULT=$(echo '{"action":"check_init","cwd":"'"$PWD"'"}' | nc -U -w1 "$SOCKET" 2>/dev/null)
 
 if [[ "$RESULT" == *'"initialized":false'* ]]; then
-    echo "📋 Project not indexed by TreeRAG."
+    echo "📋 Project not indexed by Engram."
     echo "   Run /init-project to enable smart context."
     exit 0
 fi
@@ -81,7 +81,7 @@ fi
 # Fire-and-forget: prepare session context
 (echo '{"action":"prepare_session","cwd":"'"$PWD"'"}' | nc -U -w0 "$SOCKET") &
 
-echo "✓ TreeRAG context loaded"
+echo "✓ Engram context loaded"
 exit 0
 ```
 
@@ -92,8 +92,8 @@ exit 0
 # Fires before Claude processes user prompt
 # Input: JSON with prompt field
 
-SOCKET="/tmp/treerag.sock"
-CACHE_DIR="/tmp/treerag_cache"
+SOCKET="/tmp/engram.sock"
+CACHE_DIR="/tmp/engram_cache"
 PROJECT_HASH=$(echo -n "$PWD" | md5)
 
 # Read prompt from stdin
@@ -122,7 +122,7 @@ exit 0
 #!/bin/bash
 # Fires after Claude modifies a file
 
-SOCKET="/tmp/treerag.sock"
+SOCKET="/tmp/engram.sock"
 
 # Read tool info from stdin
 read -r INPUT
@@ -148,7 +148,7 @@ exit 0
 #!/bin/bash
 # Fires when a subagent is spawned
 
-SOCKET="/tmp/treerag.sock"
+SOCKET="/tmp/engram.sock"
 
 # Read subagent info
 read -r INPUT
@@ -174,7 +174,7 @@ exit 0
 #!/bin/bash
 # Fires when a subagent completes
 
-SOCKET="/tmp/treerag.sock"
+SOCKET="/tmp/engram.sock"
 
 # Read subagent result
 read -r INPUT
@@ -195,7 +195,7 @@ exit 0
 
 ```markdown
 <!-- .claude/commands/init-project.md -->
-Initialize the current project for TreeRAG smart context.
+Initialize the current project for Engram smart context.
 
 This command will:
 1. Scan the codebase structure (fast, ~30 seconds)
@@ -214,14 +214,14 @@ Implementation script:
 #!/bin/bash
 # .claude/commands/init-project.sh
 
-SOCKET="/tmp/treerag.sock"
+SOCKET="/tmp/engram.sock"
 
-echo "🔍 Initializing TreeRAG for: $PWD"
+echo "🔍 Initializing Engram for: $PWD"
 
 # Check daemon
 if ! nc -z -U "$SOCKET" 2>/dev/null; then
-    echo "Starting TreeRAG daemon..."
-    treerag start
+    echo "Starting Engram daemon..."
+    engram start
     sleep 1
 fi
 
@@ -264,7 +264,7 @@ fi
 
 ```markdown
 <!-- .claude/commands/scout-status.md -->
-Show TreeRAG indexing status for the current project.
+Show Engram indexing status for the current project.
 
 Usage: /scout-status
 ```
@@ -273,7 +273,7 @@ Usage: /scout-status
 
 ```markdown
 <!-- .claude/commands/refresh-context.md -->
-Force refresh TreeRAG context for the current session.
+Force refresh Engram context for the current session.
 
 Usage: /refresh-context
 ```
@@ -346,7 +346,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
 
-echo "Installing TreeRAG Claude Code integration..."
+echo "Installing Engram Claude Code integration..."
 
 # 1. Ensure .claude directory exists
 mkdir -p "$CLAUDE_DIR/hooks"
@@ -370,15 +370,15 @@ fi
 cp "$SCRIPT_DIR/settings.json" "$CLAUDE_DIR/settings.json"
 
 # 5. Install launchd plist for daemon
-PLIST="$HOME/Library/LaunchAgents/com.treerag.daemon.plist"
-cp "$SCRIPT_DIR/com.treerag.daemon.plist" "$PLIST"
+PLIST="$HOME/Library/LaunchAgents/com.engram.daemon.plist"
+cp "$SCRIPT_DIR/com.engram.daemon.plist" "$PLIST"
 
 echo ""
 echo "✓ Installation complete!"
 echo ""
 echo "Next steps:"
-echo "  1. Start the daemon: treerag start"
-echo "  2. Initialize a project: cd /your/project && treerag init"
+echo "  1. Start the daemon: engram start"
+echo "  2. Initialize a project: cd /your/project && engram init"
 echo "  3. Use Claude Code normally - context will be injected automatically"
 ```
 
@@ -530,7 +530,7 @@ sleep 2
 FD_AFTER=$(ls /proc/$$/fd 2>/dev/null | wc -l)
 
 # Check for orphan processes
-ORPHANS=$(pgrep -f "treerag" | wc -l)
+ORPHANS=$(pgrep -f "engram" | wc -l)
 
 echo "FD leak: $((FD_AFTER - FD_BEFORE))"
 echo "Orphan processes: $ORPHANS"
@@ -580,8 +580,8 @@ cargo test --test integration_hooks
 ### Manual Verification
 
 1. Install integration: `./claude-integration/install.sh`
-2. Start daemon: `treerag start`
-3. Initialize project: `cd /path/to/project && treerag init`
+2. Start daemon: `engram start`
+3. Initialize project: `cd /path/to/project && engram init`
 4. Open Claude Code in the project
 5. Verify session start message appears
 6. Make a code change and verify indexing updates

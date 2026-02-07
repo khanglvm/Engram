@@ -446,21 +446,21 @@ wait_for_condition(
 
 ```
 crates/
-├── treerag-ipc/
+├── engram-ipc/
 │   ├── src/
 │   │   └── *.rs
 │   └── tests/
 │       ├── integration_ipc.rs      # Client-server tests
 │       └── stress_test.rs          # Load testing
 │
-├── treerag-core/
+├── engram-core/
 │   ├── src/
 │   │   └── *.rs
 │   └── tests/
 │       ├── integration_storage.rs  # Persistence tests
 │       └── integration_manager.rs  # Project lifecycle
 │
-└── treerag-daemon/
+└── engram-daemon/
     ├── src/
     │   └── *.rs
     └── tests/

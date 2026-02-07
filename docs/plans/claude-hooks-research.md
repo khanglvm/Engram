@@ -26,7 +26,7 @@ Claude Code hooks are configured in Claude settings under `"hooks"`, with event-
 5. **Operational behavior**
    - Hook settings are loaded at startup from settings sources, and updates require explicit review/approval in Claude Code.
 
-## Implications for TreeRAG
+## Implications for Engram
 
 1. Treat hooks as **event ingest + context injection edges**, not as primary storage.
 2. Keep hook scripts fast; push heavy work into daemon IPC endpoints.

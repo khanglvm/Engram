@@ -1,17 +1,17 @@
 #!/bin/bash
-# TreeRAG Slash Command: /init-project
-# Initialize the current project for TreeRAG smart context
+# Engram Slash Command: /init-project
+# Initialize the current project for Engram smart context
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../hooks/common.sh"
 
-echo "🔍 Initializing TreeRAG for: $PWD"
+echo "🔍 Initializing Engram for: $PWD"
 
 # Check daemon
-if ! treerag_is_running; then
-    echo "⚠️ TreeRAG daemon not running."
-    echo "   Start with: cargo run --bin treerag-daemon"
+if ! engram_is_running; then
+    echo "⚠️ Engram daemon not running."
+    echo "   Start with: cargo run --bin engram-daemon"
     exit 1
 fi
 
@@ -21,9 +21,9 @@ QUICK=false
 
 # Send init request
 if $QUICK; then
-    RESULT=$(treerag_send '{"action":"init_project","cwd":"'"$PWD"'","async_mode":false}' 60)
+    RESULT=$(engram_send '{"action":"init_project","cwd":"'"$PWD"'","async_mode":false}' 60)
 else
-    RESULT=$(treerag_send '{"action":"init_project","cwd":"'"$PWD"'","async_mode":true}' 60)
+    RESULT=$(engram_send '{"action":"init_project","cwd":"'"$PWD"'","async_mode":true}' 60)
 fi
 
 # Parse result

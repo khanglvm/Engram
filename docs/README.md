@@ -1,8 +1,8 @@
-# TreeRAG
+# Engram
 
 > **Intelligent Context Management for AI Coding Agents**
 
-TreeRAG provides smart, focused context to AI coding assistants by maintaining a daemon that understands your codebase structure, dependencies, and history.
+Engram provides smart, focused context to AI coding assistants by maintaining a daemon that understands your codebase structure, dependencies, and history.
 
 ## Features
 
@@ -16,21 +16,21 @@ TreeRAG provides smart, focused context to AI coding assistants by maintaining a
 ### 1. Build
 
 ```bash
-cd /path/to/TreeRAG
+cd /path/to/Engram
 cargo build --release
 ```
 
 ### 2. Start the Daemon
 
 ```bash
-cargo run --release --bin treerag-daemon
+cargo run --release --bin engram-daemon
 ```
 
 ### 3. Initialize a Project
 
 ```bash
 cd /your/project
-cargo run --release --bin treerag-cli -- init .
+cargo run --release --bin engram-cli -- init .
 ```
 
 ### 4. Install Claude Integration (optional)
@@ -44,14 +44,14 @@ Now open Claude Code in your project - context is injected automatically!
 ## Project Structure
 
 ```
-TreeRAG/
+Engram/
 ├── crates/
-│   ├── treerag-cli/       # Command-line interface
-│   ├── treerag-core/      # Project management, config, metrics
-│   ├── treerag-context/   # Context manager, hybrid router
-│   ├── treerag-daemon/    # Background daemon process
-│   ├── treerag-indexer/   # Scanner, parser, storage
-│   └── treerag-ipc/       # Client/server IPC protocol
+│   ├── engram-cli/       # Command-line interface
+│   ├── engram-core/      # Project management, config, metrics
+│   ├── engram-context/   # Context manager, hybrid router
+│   ├── engram-daemon/    # Background daemon process
+│   ├── engram-indexer/   # Scanner, parser, storage
+│   └── engram-ipc/       # Client/server IPC protocol
 ├── claude-integration/    # Claude Code hooks and commands
 ├── docs/                  # Documentation
 │   └── implementation/    # Phase implementation plans
@@ -62,12 +62,12 @@ TreeRAG/
 
 | Command | Description |
 |---------|-------------|
-| `treerag start` | Start the daemon |
-| `treerag stop` | Stop the daemon |
-| `treerag status` | Show daemon status |
-| `treerag init <path>` | Initialize project indexing |
-| `treerag project <path>` | Show project info |
-| `treerag ping` | Check daemon responsiveness |
+| `engram start` | Start the daemon |
+| `engram stop` | Stop the daemon |
+| `engram status` | Show daemon status |
+| `engram init <path>` | Initialize project indexing |
+| `engram project <path>` | Show project info |
+| `engram ping` | Check daemon responsiveness |
 
 ## Claude Slash Commands
 

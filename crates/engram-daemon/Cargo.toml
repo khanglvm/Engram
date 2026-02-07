@@ -1,0 +1,32 @@
+[package]
+name = "engram-daemon"
+description = "Engram daemon process"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "engram-daemon"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+
+libc = { workspace = true }
+
+engram-core = { workspace = true }
+engram-context = { workspace = true }
+engram-indexer = { workspace = true }
+engram-ipc = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

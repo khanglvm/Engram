@@ -1,4 +1,4 @@
-# TreeRAG Requirement Verification: Claude Lifecycle Memory + API
+# Engram Requirement Verification: Claude Lifecycle Memory + API
 
 Date: 2026-02-07
 
@@ -15,17 +15,17 @@ Goal: Claude Code agents can access, retrieve, and update memory through Claude 
 
 | Requirement | Status | Evidence |
 |---|---|---|
-| Retrieve context/memory during agent flow | Partial | `get_context` returns rendered context including recent experiences loaded from storage (`crates/treerag-ipc/src/protocol.rs`, `crates/treerag-context/src/manager.rs`, `crates/treerag-context/src/render.rs`) |
-| Update memory from Claude lifecycle hooks | Partial | `subagent_stop.sh` sends `graft_experience`; daemon appends to experience log (`claude-integration/hooks/subagent_stop.sh`, `crates/treerag-daemon/src/handler.rs`, `crates/treerag-indexer/src/storage/mod.rs`) |
-| File + in-memory sync for memory | Partial | New experiences are appended to file and injected into active scopes, but file-change notifications do not trigger reindex/sync and tree cache invalidation is missing (`crates/treerag-daemon/src/handler.rs`, `crates/treerag-context/src/manager.rs`) |
-| API to interact with memory (read/query/update) | Fail | IPC has no explicit memory CRUD/query API; only `GraftExperience` (append) and indirect retrieval through `GetContext` (`crates/treerag-ipc/src/protocol.rs`) |
-| Full lifecycle hook coverage for memory persistence | Fail | `session_end.sh` sends `session_end` action that is not defined in protocol; `pre_compact.sh` is a no-op (`claude-integration/hooks/session_end.sh`, `claude-integration/hooks/pre_compact.sh`, `crates/treerag-ipc/src/protocol.rs`) |
+| Retrieve context/memory during agent flow | Partial | `get_context` returns rendered context including recent experiences loaded from storage (`crates/engram-ipc/src/protocol.rs`, `crates/engram-context/src/manager.rs`, `crates/engram-context/src/render.rs`) |
+| Update memory from Claude lifecycle hooks | Partial | `subagent_stop.sh` sends `graft_experience`; daemon appends to experience log (`claude-integration/hooks/subagent_stop.sh`, `crates/engram-daemon/src/handler.rs`, `crates/engram-indexer/src/storage/mod.rs`) |
+| File + in-memory sync for memory | Partial | New experiences are appended to file and injected into active scopes, but file-change notifications do not trigger reindex/sync and tree cache invalidation is missing (`crates/engram-daemon/src/handler.rs`, `crates/engram-context/src/manager.rs`) |
+| API to interact with memory (read/query/update) | Fail | IPC has no explicit memory CRUD/query API; only `GraftExperience` (append) and indirect retrieval through `GetContext` (`crates/engram-ipc/src/protocol.rs`) |
+| Full lifecycle hook coverage for memory persistence | Fail | `session_end.sh` sends `session_end` action that is not defined in protocol; `pre_compact.sh` is a no-op (`claude-integration/hooks/session_end.sh`, `claude-integration/hooks/pre_compact.sh`, `crates/engram-ipc/src/protocol.rs`) |
 
 ## Critical Gaps
 
 1. Protocol/handler mismatch: `session_end` hook action is unsupported.
 2. No first-class memory API for read/search/update/delete.
-3. Hook cache flow is incomplete: `user_prompt.sh` reads `/tmp/treerag_cache/*.ctx`, but regular lifecycle does not persist refreshed cache.
+3. Hook cache flow is incomplete: `user_prompt.sh` reads `/tmp/engram_cache/*.ctx`, but regular lifecycle does not persist refreshed cache.
 4. `notify_file_change` path is acknowledged but does not mutate memory/index state.
 5. Durability and consistency are weak for writes: `graft_experience` is async fire-and-forget from handler (ack before write completion).
 

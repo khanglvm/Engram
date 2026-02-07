@@ -4,7 +4,7 @@
 
 Engram is a daemon-based system that provides intelligent, structured context to AI coding assistants like Claude Code. It uses hierarchical tree indexing and hybrid retrieval to help AI agents navigate large codebases efficiently.
 
-Current binary and crate names still use the `treerag` prefix.
+Binary and crate names use the `engram` prefix.
 
 ## Features
 
@@ -33,25 +33,25 @@ cd Engram
 cargo build --release
 
 # Install binaries
-cargo install --path crates/treerag-cli
-cargo install --path crates/treerag-daemon
+cargo install --path crates/engram-cli
+cargo install --path crates/engram-daemon
 
 # Install launchd service (optional, for auto-start)
-cp integration/com.treerag.daemon.plist ~/Library/LaunchAgents/
+cp integration/com.engram.daemon.plist ~/Library/LaunchAgents/
 ```
 
 ## Quick Start
 
 ```bash
 # Start the daemon
-treerag start
+engram start
 
 # Check status
-treerag status
+engram status
 
 # Initialize a project
 cd /path/to/your/project
-treerag init
+engram init
 
 # The daemon is now tracking your project!
 ```
@@ -62,7 +62,7 @@ Engram integrates with Claude Code via hooks that inject relevant context automa
 
 ```bash
 # Install Claude Code integration
-treerag install-claude
+engram install-claude
 ```
 
 Or use the `/init-project` slash command directly in Claude Code.
@@ -98,12 +98,12 @@ Or use the `/init-project` slash command directly in Claude Code.
 
 | Command | Description |
 |---------|-------------|
-| `treerag start` | Start the daemon |
-| `treerag stop` | Stop the daemon |
-| `treerag status` | Show daemon status |
-| `treerag init [path]` | Initialize a project |
-| `treerag project [path]` | Show project info |
-| `treerag ping` | Check daemon connectivity |
+| `engram start` | Start the daemon |
+| `engram stop` | Stop the daemon |
+| `engram status` | Show daemon status |
+| `engram init [path]` | Initialize a project |
+| `engram project [path]` | Show project info |
+| `engram ping` | Check daemon connectivity |
 
 ## Development
 
@@ -112,22 +112,22 @@ Or use the `/init-project` slash command directly in Claude Code.
 cargo test --workspace
 
 # Run daemon in foreground (for development)
-RUST_LOG=debug treerag start --foreground
+RUST_LOG=debug engram start --foreground
 
 # Check IPC connectivity
-echo '{"action":"ping"}' | nc -U /tmp/treerag.sock
+echo '{"action":"ping"}' | nc -U /tmp/engram.sock
 ```
 
 ## Configuration
 
-Configuration is stored in `~/.treerag/config.yaml`:
+Configuration is stored in `~/.engram/config.yaml`:
 
 ```yaml
 # Socket path for IPC
-socket_path: /tmp/treerag.sock
+socket_path: /tmp/engram.sock
 
 # Data directory for project storage
-data_dir: ~/.treerag
+data_dir: ~/.engram
 
 # Maximum memory usage (bytes)
 max_memory: 104857600  # 100MB
@@ -141,10 +141,10 @@ log_level: info
 
 ## Project Data
 
-Project data is stored in `~/.treerag/projects/<hash>/`:
+Project data is stored in `~/.engram/projects/<hash>/`:
 
 ```
-~/.treerag/projects/<hash>/
+~/.engram/projects/<hash>/
 ├── manifest.json      # Project metadata
 ├── tree.mmap          # Memory-mapped tree structure
 ├── experience.jsonl   # Agent decision log

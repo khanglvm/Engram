@@ -534,9 +534,9 @@ async fn stress_long_running() {
 
 ```bash
 # Unit tests
-cargo test -p treerag-daemon optimization::
-cargo test -p treerag-core memory::
-cargo test -p treerag-core metrics::
+cargo test -p engram-daemon optimization::
+cargo test -p engram-core memory::
+cargo test -p engram-core metrics::
 
 # Integration tests
 cargo test --test integration_memory
@@ -551,13 +551,13 @@ cargo test --release -- --ignored stress_
 
 # Memory profiling
 cargo run --release -- --dev &
-ps -o rss,vsz,pid -p $(pgrep treerag-daemon)
+ps -o rss,vsz,pid -p $(pgrep engram-daemon)
 
 # CPU profiling
-cargo flamegraph -- treerag-daemon --dev
+cargo flamegraph -- engram-daemon --dev
 
 # Latency testing
-hyperfine --warmup 3 'echo "{}" | nc -U /tmp/treerag.sock'
+hyperfine --warmup 3 'echo "{}" | nc -U /tmp/engram.sock'
 ```
 
 ---
@@ -573,7 +573,7 @@ cargo bench --workspace
 # Memory profiling over time
 cargo run --release &
 for i in {1..60}; do
-    ps -o rss -p $(pgrep treerag-daemon) | tail -1
+    ps -o rss -p $(pgrep engram-daemon) | tail -1
     sleep 1
 done
 

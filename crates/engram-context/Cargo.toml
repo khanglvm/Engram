@@ -1,0 +1,24 @@
+[package]
+name = "engram-context"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Context management for Engram AI agents"
+
+[dependencies]
+# Workspace dependencies
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+thiserror.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+parking_lot.workspace = true
+
+# Internal crates
+engram-indexer.workspace = true
+engram-ipc.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

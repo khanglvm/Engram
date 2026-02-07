@@ -26,7 +26,7 @@
 #### Workspace Structure
 ```
 crates/
-├── treerag-daemon/
+├── engram-daemon/
 │   ├── Cargo.toml
 │   └── src/
 │       ├── main.rs              # Entry point, CLI args
@@ -39,7 +39,7 @@ crates/
 #### Daemon Lifecycle
 
 ```rust
-// crates/treerag-daemon/src/daemon.rs
+// crates/engram-daemon/src/daemon.rs
 
 use tokio::signal;
 use std::path::PathBuf;
@@ -92,7 +92,7 @@ impl Daemon {
 #### Configuration
 
 ```rust
-// crates/treerag-daemon/src/config.rs
+// crates/engram-daemon/src/config.rs
 
 use serde::Deserialize;
 use std::path::PathBuf;
@@ -121,11 +121,11 @@ pub struct DaemonConfig {
 }
 
 fn default_socket_path() -> PathBuf {
-    PathBuf::from("/tmp/treerag.sock")
+    PathBuf::from("/tmp/engram.sock")
 }
 
 fn default_data_dir() -> PathBuf {
-    dirs::home_dir().unwrap().join(".treerag")
+    dirs::home_dir().unwrap().join(".engram")
 }
 
 fn default_max_memory() -> usize {
@@ -140,18 +140,18 @@ fn default_max_projects() -> usize {
 #### launchd Integration
 
 ```xml
-<!-- claude-integration/com.treerag.daemon.plist -->
+<!-- claude-integration/com.engram.daemon.plist -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
   "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.treerag.daemon</string>
+    <string>com.engram.daemon</string>
     
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/treerag-daemon</string>
+        <string>/usr/local/bin/engram-daemon</string>
     </array>
     
     <key>RunAtLoad</key>
@@ -164,10 +164,10 @@ fn default_max_projects() -> usize {
     </dict>
     
     <key>StandardOutPath</key>
-    <string>/tmp/treerag.out.log</string>
+    <string>/tmp/engram.out.log</string>
     
     <key>StandardErrorPath</key>
-    <string>/tmp/treerag.err.log</string>
+    <string>/tmp/engram.err.log</string>
     
     <key>EnvironmentVariables</key>
     <dict>
@@ -203,7 +203,7 @@ fn default_max_projects() -> usize {
 ### Protocol Design
 
 ```rust
-// crates/treerag-ipc/src/protocol.rs
+// crates/engram-ipc/src/protocol.rs
 
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
@@ -319,7 +319,7 @@ pub enum ErrorCode {
 ### IPC Server Implementation
 
 ```rust
-// crates/treerag-ipc/src/server.rs
+// crates/engram-ipc/src/server.rs
 
 use tokio::net::{UnixListener, UnixStream};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -431,7 +431,7 @@ pub trait RequestHandler: Send + Sync {
 ### Implementation
 
 ```rust
-// crates/treerag-core/src/project_manager.rs
+// crates/engram-core/src/project_manager.rs
 
 use lru::LruCache;
 use std::collections::HashMap;
@@ -543,13 +543,13 @@ impl ProjectManager {
 ### Implementation
 
 ```rust
-// crates/treerag-cli/src/main.rs
+// crates/engram-cli/src/main.rs
 
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(name = "treerag")]
-#[command(about = "TreeRAG context management for AI coding")]
+#[command(name = "engram")]
+#[command(about = "Engram context management for AI coding")]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
@@ -599,20 +599,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         Commands::Start { foreground } => {
             if foreground {
                 // Run daemon directly
-                treerag_daemon::run().await?;
+                engram_daemon::run().await?;
             } else {
                 // Use launchctl on macOS
                 std::process::Command::new("launchctl")
-                    .args(["load", "-w", "~/Library/LaunchAgents/com.treerag.daemon.plist"])
+                    .args(["load", "-w", "~/Library/LaunchAgents/com.engram.daemon.plist"])
                     .status()?;
-                println!("TreeRAG daemon started");
+                println!("Engram daemon started");
             }
         }
         
         Commands::Stop => {
             let client = IpcClient::connect().await?;
             client.send(Request::Shutdown).await?;
-            println!("TreeRAG daemon stopped");
+            println!("Engram daemon stopped");
         }
         
         Commands::Status => {
@@ -622,7 +622,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             if let Response::Ok { data: Some(ResponseData::Status { 
                 version, uptime_secs, projects_loaded, memory_usage 
             })} = response {
-                println!("TreeRAG Daemon v{}", version);
+                println!("Engram Daemon v{}", version);
                 println!("  Uptime: {}s", uptime_secs);
                 println!("  Projects loaded: {}", projects_loaded);
                 println!("  Memory: {} MB", memory_usage / 1024 / 1024);
@@ -669,7 +669,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Unit Test Coverage
 
-#### treerag-ipc
+#### engram-ipc
 
 | Component | Required Tests |
 |-----------|----------------|
@@ -687,7 +687,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 - Socket path with special characters
 - Socket already in use
 
-#### treerag-core
+#### engram-core
 
 | Component | Required Tests |
 |-----------|----------------|
@@ -706,7 +706,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 - Concurrent init_project for same path
 - Project with >1M files (stress test metadata)
 
-#### treerag-daemon
+#### engram-daemon
 
 | Component | Required Tests |
 |-----------|----------------|
@@ -722,7 +722,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 - Socket file deletion while running
 - Config file changes during runtime
 
-#### treerag-cli
+#### engram-cli
 
 | Component | Required Tests |
 |-----------|----------------|
@@ -861,18 +861,18 @@ All CLI commands must be tested:
 
 ```bash
 # Success cases
-treerag start
-treerag status  # Shows running
-treerag ping    # Shows <Xms
-treerag init .
-treerag project .
-treerag stop
+engram start
+engram status  # Shows running
+engram ping    # Shows <Xms
+engram init .
+engram project .
+engram stop
 
 # Error cases
-treerag status  # Daemon not running
-treerag stop    # Already stopped
-treerag init /nonexistent
-treerag init    # Already initialized
+engram status  # Daemon not running
+engram stop    # Already stopped
+engram init /nonexistent
+engram init    # Already initialized
 ```
 
 ### Test Execution Commands
@@ -885,10 +885,10 @@ cargo test --workspace --lib
 cargo test --workspace --test '*'
 
 # Specific crate tests
-cargo test -p treerag-ipc
-cargo test -p treerag-core
-cargo test -p treerag-daemon
-cargo test -p treerag-cli
+cargo test -p engram-ipc
+cargo test -p engram-core
+cargo test -p engram-daemon
+cargo test -p engram-cli
 
 # With coverage
 cargo llvm-cov --workspace
@@ -915,9 +915,9 @@ cargo test --release -- --ignored stress
 - [x] Basic logging with `tracing`
 
 ### Testing
-- [x] Unit tests for treerag-ipc (14 tests passing)
-- [x] Unit tests for treerag-core (16 tests passing)
-- [x] Unit tests for treerag-daemon (4 tests passing)
+- [x] Unit tests for engram-ipc (14 tests passing)
+- [x] Unit tests for engram-core (16 tests passing)
+- [x] Unit tests for engram-daemon (4 tests passing)
 - [x] Integration tests for IPC round-trips (3 tests)
 - [x] Integration tests for daemon lifecycle (8 tests)
 - [x] Integration tests for project lifecycle (included above)

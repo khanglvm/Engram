@@ -1,5 +1,5 @@
 #!/bin/bash
-# TreeRAG Hook: PreCompact
+# Engram Hook: PreCompact
 # Fires before context compaction
 # Opportunity to save important context before it's lost
 

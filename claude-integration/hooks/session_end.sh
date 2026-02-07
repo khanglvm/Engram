@@ -1,5 +1,5 @@
 #!/bin/bash
-# TreeRAG Hook: SessionEnd
+# Engram Hook: SessionEnd
 # Fires when Claude Code session ends
 
 set -euo pipefail
@@ -64,6 +64,6 @@ fi
 ENTRY='{"id":'"$ESCAPED_ENTRY_ID"',"kind":"session_summary","content":'"$ESCAPED_CONTENT"',"tags":["hook","session_end"],"created_at":'"$TIMESTAMP"',"updated_at":'"$TIMESTAMP"',"session_id":'"$SESSION_ID_VALUE"',"subagent_id":null,"deleted":false}'
 
 # Fire-and-forget: persist end-of-session summary as memory entry
-treerag_send_async '{"action":"memory_put","cwd":"'"$PWD"'","entry":'"$ENTRY"'}'
+engram_send_async '{"action":"memory_put","cwd":"'"$PWD"'","entry":'"$ENTRY"'}'
 
 exit 0

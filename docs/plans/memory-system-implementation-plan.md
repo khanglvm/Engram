@@ -1,4 +1,4 @@
-# TreeRAG Execution Plan: Claude Lifecycle Memory System
+# Engram Execution Plan: Claude Lifecycle Memory System
 
 Date: 2026-02-07
 
@@ -32,7 +32,7 @@ Unify memory around a first-class `MemoryEntry` (instead of implicit append-only
 
 ## API Plan (IPC)
 
-Add request/response variants in `crates/treerag-ipc/src/protocol.rs`:
+Add request/response variants in `crates/engram-ipc/src/protocol.rs`:
 - `MemoryPut { cwd, entry }`
 - `MemoryGet { cwd, id }`
 - `MemoryList { cwd, limit, before, kinds, tags }`
@@ -49,7 +49,7 @@ Error model:
 
 ## Hook-to-API Mapping
 
-| Claude hook event | TreeRAG action | Required result |
+| Claude hook event | Engram action | Required result |
 |---|---|---|
 | `SessionStart` | `MemorySync` + `PrepareContext` | Fresh in-memory view before interaction |
 | `UserPromptSubmit` | `MemorySearch` + `GetContext` | Deterministic context injection from memory |
@@ -71,8 +71,8 @@ Scope:
 - Ensure daemon handler returns write result only after durable append.
 
 Changes:
-- `crates/treerag-ipc/src/protocol.rs`
-- `crates/treerag-daemon/src/handler.rs`
+- `crates/engram-ipc/src/protocol.rs`
+- `crates/engram-daemon/src/handler.rs`
 - `claude-integration/hooks/session_end.sh`
 
 Acceptance:
@@ -90,8 +90,8 @@ Scope:
 - Add patch/delete semantics with tombstones.
 
 Changes:
-- New module(s): `crates/treerag-context/src/memory.rs` (or dedicated crate)
-- Extend storage layer in `crates/treerag-indexer/src/storage/`
+- New module(s): `crates/engram-context/src/memory.rs` (or dedicated crate)
+- Extend storage layer in `crates/engram-indexer/src/storage/`
 - Wire in `ProjectManager` and daemon startup path.
 
 Acceptance:
@@ -127,8 +127,8 @@ Scope:
 - Feed selected memories into context renderer with provenance metadata.
 
 Changes:
-- `crates/treerag-context/src/router.rs`
-- `crates/treerag-context/src/render.rs`
+- `crates/engram-context/src/router.rs`
+- `crates/engram-context/src/render.rs`
 - Memory ranking module.
 
 Acceptance:
@@ -143,8 +143,8 @@ Scope:
 - Add rate limits/size limits for hook-originated payloads.
 
 Changes:
-- `crates/treerag-core/src/metrics.rs`
-- CLI commands (for debug/repair): `crates/treerag-cli/src/main.rs`
+- `crates/engram-core/src/metrics.rs`
+- CLI commands (for debug/repair): `crates/engram-cli/src/main.rs`
 
 Acceptance:
 - Operational dashboard/log lines can diagnose stale memory and sync lag.

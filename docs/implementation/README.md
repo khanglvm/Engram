@@ -1,14 +1,14 @@
-# TreeRAG Implementation Plan
+# Engram Implementation Plan
 
 > **Vectorless, Reasoning-Based Context Management for AI Coding Agents**
 
 ## Project Overview
 
-TreeRAG is a daemon-based context management system that provides intelligent, structured context to AI coding assistants (Claude Code, OpenCode, Gemini CLI) for large codebases. It replaces traditional file-based instruction systems with hierarchical tree indexing and hybrid retrieval.
+Engram is a daemon-based context management system that provides intelligent, structured context to AI coding assistants (Claude Code, OpenCode, Gemini CLI) for large codebases. It replaces traditional file-based instruction systems with hierarchical tree indexing and hybrid retrieval.
 
 ### Core Value Proposition
 
-| Problem | TreeRAG Solution |
+| Problem | Engram Solution |
 |---------|------------------|
 | Context rot in long sessions | Dynamic tree slicing with focused context |
 | Slow knowledge retrieval | Hybrid vector + tree search, pre-computed cache |
@@ -22,11 +22,11 @@ TreeRAG is a daemon-based context management system that provides intelligent, s
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           TreeRAG SYSTEM                                    │
+│                           Engram SYSTEM                                    │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                    TREERAG DAEMON (Single Process)                  │   │
+│  │                    ENGRAM DAEMON (Single Process)                  │   │
 │  │                                                                      │   │
 │  │  ┌─────────────┐  ┌─────────────┐  ┌──────────────────────────┐    │   │
 │  │  │ IPC Server  │  │ File Watcher│  │   Project Manager        │    │   │
@@ -107,18 +107,18 @@ TreeRAG is a daemon-based context management system that provides intelligent, s
 ## Directory Structure
 
 ```
-TreeRAG/
+Engram/
 ├── docs/
 │   └── implementation/          # This directory
 │       ├── README.md            # Overview (this file)
 │       ├── phase-1-*.md         # Phase plans
 │       └── ...
 ├── crates/                      # Rust workspace
-│   ├── treerag-daemon/          # Main daemon binary
-│   ├── treerag-core/            # Core library
-│   ├── treerag-indexer/         # Indexing logic
-│   ├── treerag-ipc/             # IPC protocol
-│   └── treerag-cli/             # CLI tool
+│   ├── engram-daemon/          # Main daemon binary
+│   ├── engram-core/            # Core library
+│   ├── engram-indexer/         # Indexing logic
+│   ├── engram-ipc/             # IPC protocol
+│   └── engram-cli/             # CLI tool
 ├── claude-integration/          # Claude Code plugin
 │   ├── hooks/                   # Hook scripts
 │   ├── commands/                # Slash commands
@@ -146,7 +146,7 @@ TreeRAG/
 cargo build --release
 
 # Run daemon in development
-cargo run -p treerag-daemon -- --dev
+cargo run -p engram-daemon -- --dev
 
 # Run tests
 cargo test --workspace
@@ -155,5 +155,5 @@ cargo test --workspace
 ./claude-integration/install.sh
 
 # Check daemon status
-treerag status
+engram status
 ```

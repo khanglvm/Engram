@@ -1,4 +1,4 @@
-Initialize the current project for TreeRAG smart context.
+Initialize the current project for Engram smart context.
 
 This command will:
 1. Scan the codebase structure (fast, ~30 seconds)

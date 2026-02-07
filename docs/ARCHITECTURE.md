@@ -1,8 +1,8 @@
-# TreeRAG Architecture
+# Engram Architecture
 
 ## System Overview
 
-TreeRAG is a daemon-based context management system that provides AI coding agents with smart, focused context from large codebases.
+Engram is a daemon-based context management system that provides AI coding agents with smart, focused context from large codebases.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -20,7 +20,7 @@ TreeRAG is a daemon-based context management system that provides AI coding agen
         │
         ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   TreeRAG Daemon                             │
+│                   Engram Daemon                             │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
 │  │   Project    │  │   Context    │  │   Metrics    │      │
 │  │   Manager    │  │   Manager    │  │   Monitor    │      │
@@ -35,35 +35,35 @@ TreeRAG is a daemon-based context management system that provides AI coding agen
 
 ## Crate Responsibilities
 
-### treerag-ipc
+### engram-ipc
 - MessagePack serialization over Unix sockets
 - Request/Response protocol
 - Async client and server
 
-### treerag-core
+### engram-core
 - Project management with LRU cache
 - Configuration loading (YAML)
 - Metrics and monitoring
 
-### treerag-indexer
+### engram-indexer
 - Fast file scanner with gitignore support
 - Tree-sitter parsing (Rust, Python, TypeScript, JavaScript)
 - Tree data structure with dependencies
 - Persistent storage (JSON + MessagePack)
 - File watcher with debouncing
 
-### treerag-context
+### engram-context
 - Context Manager with scopes
 - Hybrid router (tree-based retrieval)
 - Context Sandwich builder (layers)
 - Experience pool for agent decisions
 
-### treerag-daemon
+### engram-daemon
 - Background process lifecycle
 - Request handler routing
 - Integration with all crates
 
-### treerag-cli
+### engram-cli
 - User-facing commands
 - Daemon control
 

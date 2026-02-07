@@ -1,26 +1,26 @@
 #!/bin/bash
-# TreeRAG Slash Command: /scout-status
-# Show TreeRAG indexing status
+# Engram Slash Command: /scout-status
+# Show Engram indexing status
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../hooks/common.sh"
 
-echo "📊 TreeRAG Status"
+echo "📊 Engram Status"
 echo "================="
 
 # Check daemon
-if ! treerag_is_running; then
+if ! engram_is_running; then
     echo "❌ Daemon: Not running"
     echo ""
-    echo "Start with: cargo run --bin treerag-daemon"
+    echo "Start with: cargo run --bin engram-daemon"
     exit 0
 fi
 
 echo "✓ Daemon: Running"
 
 # Get daemon status
-RESULT=$(treerag_send '{"action":"status"}' 2)
+RESULT=$(engram_send '{"action":"status"}' 2)
 
 if [[ -n "$RESULT" ]]; then
     VERSION=$(echo "$RESULT" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("data",{}).get("version","unknown"))' 2>/dev/null || echo "unknown")
@@ -37,7 +37,7 @@ fi
 echo ""
 
 # Check project initialization
-INIT_RESULT=$(treerag_send '{"action":"check_init","cwd":"'"$PWD"'"}' 1)
+INIT_RESULT=$(engram_send '{"action":"check_init","cwd":"'"$PWD"'"}' 1)
 
 if [[ "$INIT_RESULT" == *'"initialized":true'* ]]; then
     echo "✓ Project: Initialized"
